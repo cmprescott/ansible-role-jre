@@ -5,7 +5,7 @@
 jre_version: 8u45
 
 # Download settings
-jre_download_url: http://download.oracle.com/otn-pub/java/jdk/{{ jre_version }}-b14/server-jre-{{ jre_version }}-linux-x64.tar.gz
+jre_download_url: "http://download.oracle.com/otn-pub/java/jdk/{{ jre_version }}-b14/server-jre-{{ jre_version }}-linux-x64.tar.gz"
 jre_download_referrer: "http://www.oracle.com/technetwork/java/javase/downloads/server-jre8-downloads-2133154.html" 
 jre_download_cookie: >
   atgPlatoStop=1; 
@@ -13,7 +13,7 @@ jre_download_cookie: >
   s_cc=true; 
   ARU_LANG=US; 
   s_nr=1430222185739; 
-  gpw_e24={{ jre_referrer }}
+  gpw_e24={{ jre_download_referrer }}
   s_sq="%"5B"%"5BB"%"5D"%"5D"
 jre_download_dest: /tmp/jre.tar.gz
 

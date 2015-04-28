@@ -1,5 +1,6 @@
 Ansible Role: JRE
 =========
+[![Build Status](https://travis-ci.org/cmprescott/ansible-role-jre.svg?branch=master)](https://travis-ci.org/cmprescott/ansible-role-jre)
 
 Downloads & installs the Oracle JRE. Defaults to Oracle Server JRE.
 
@@ -7,7 +8,7 @@ Requirements
 ------------
 
 ```shell
-# Ansible host
+# Ansible's uri module requires Python httplib2
 pip install httplib2
 
 # Ansible version > 1.6
@@ -53,7 +54,7 @@ Example Playbook
 ```yaml
 - hosts: servers
   roles:
-     - { role: cmprescott.jre }
+     - role: cmprescott.jre
 ```
 
 License
