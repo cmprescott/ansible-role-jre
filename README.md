@@ -7,7 +7,7 @@ Requirements
 ------------
 
 ```shell
-# Ansible host
+# Ansible's uri module requires Python httplib2
 pip install httplib2
 
 # Ansible version > 1.6
@@ -53,7 +53,7 @@ Example Playbook
 ```yaml
 - hosts: servers
   roles:
-     - { role: cmprescott.jre }
+     - role: cmprescott.jre
 ```
 
 License
