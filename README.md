@@ -1,5 +1,6 @@
 Ansible Role: JRE
 =========
+[![Build Status](https://travis-ci.org/cmprescott/ansible-role-jre.svg?branch=master)](https://travis-ci.org/cmprescott/ansible-role-jre)
 
 Downloads & installs the Oracle JRE. Defaults to Oracle Server JRE.
 
