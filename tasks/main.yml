@@ -1,0 +1,39 @@
+---
+# tasks file for ansible-role-jre
+
+- name: "check for current jre installation"
+  stat: "path={{ jre_install_dir }}/bin"
+  register: jre_bin
+
+
+- name: "download jre binary tarball"
+  uri:
+    url: "{{ jre_download_url }}"
+    HEADER_Referer: "{{ jre_download_referrer }}" 
+    HEADER_Cookie: "{{ jre_download_cookie }}"
+    dest: "{{ jre_download_dest }}"
+  when: not jre_bin.stat.exists
+
+
+- name: "ensure jre install directory exists"
+  sudo: Yes
+  file:
+    path: "{{ jre_install_dir }}"
+    state: directory
+
+
+- name: "ensure unarchived jre binary to its install directory"
+  sudo: Yes
+  command: tar xvf {{ jre_download_dest }} -C {{ jre_install_dir }} --strip-components=1
+  args:
+    creates: "{{ jre_install_dir }}/bin"
+  when: not jre_bin.stat.exists
+
+
+- name: "ensure alternatives with jre bins"
+  sudo: Yes
+  alternatives: 
+    link: "/usr/bin/{{ item }}"
+    name: "{{ item }}"
+    path: "{{ jre_install_dir }}/bin/{{ item }}"
+  with_items: jre_install_bins

@@ -1,0 +1,15 @@
+---
+galaxy_info:
+  author: Prescott Chris
+  description: Downloads & installs the Oracle JRE. Defaults to Oracle Server JRE.
+  license: BSD
+  min_ansible_version: 1.6
+  platforms:
+  - name: GenericLinux
+    versions:
+    - all
+    - any
+  categories:
+  - system
+
+dependencies: []
