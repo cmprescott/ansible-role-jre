@@ -1,39 +1,49 @@
 ---
 # tasks file for ansible-role-jre
 
-- name: "check for current jre installation"
-  stat: "path={{ jre_install_dir }}/bin"
-  register: jre_bin
+# ----- Gather facts & sanity checks -----
+- name: "all | ensure remote os supported"
+  fail: "Unsupported. This role is depends on Linux."
+  when: ansible_system not in ['Linux']
 
 
-- name: "download jre binary tarball"
-  uri:
-    url: "{{ jre_download_url }}"
-    HEADER_Referer: "{{ jre_download_referrer }}" 
-    HEADER_Cookie: "{{ jre_download_cookie }}"
-    dest: "{{ jre_download_dest }}"
-  when: not jre_bin.stat.exists
+# ----- Install Oracle JRE -----
+- name: "Oracle JRE | check for current jre installation"
+  stat: "path={{ jre_oracle_install_dir }}/bin"
+  register: jre_oracle_bin
+  when: ansible_system in ['Linux'] and jre_prefer_oracle
 
 
-- name: "ensure jre install directory exists"
+- name: "Oracle JRE | ensure jre install directory exists"
   sudo: Yes
   file:
-    path: "{{ jre_install_dir }}"
+    path: "{{ jre_oracle_install_dir }}"
     state: directory
+  when: ansible_system in ['Linux'] and jre_prefer_oracle
 
 
-- name: "ensure unarchived jre binary to its install directory"
+- name: "Oracle JRE | download jre binary tarball"
+  uri:
+    url: "{{ jre_oracle_download_url }}"
+    HEADER_Referer: "{{ jre_oracle_download_referrer }}"
+    HEADER_Cookie: "{{ jre_oracle_download_cookie }}"
+    dest: "{{ jre_oracle_download_dest }}"
+  when: ansible_system in ['Linux'] and jre_prefer_oracle and not jre_oracle_bin.stat.exists
+
+
+- name: "Oracle JRE | unarchive jre binary to its install directory"
   sudo: Yes
-  command: tar xvf {{ jre_download_dest }} -C {{ jre_install_dir }} --strip-components=1
+  command: tar xvf {{ jre_oracle_download_dest }} -C {{ jre_oracle_install_dir }} --strip-components=1
   args:
-    creates: "{{ jre_install_dir }}/bin"
-  when: not jre_bin.stat.exists
+    creates: "{{ jre_oracle_install_dir }}/bin"
+  when: ansible_system in ['Linux'] and jre_prefer_oracle and not jre_oracle_bin.stat.exists
 
 
-- name: "ensure alternatives with jre bins"
+- name: "Oracle JRE | ensure alternatives with jre bins"
   sudo: Yes
-  alternatives: 
+  alternatives:
     link: "/usr/bin/{{ item }}"
     name: "{{ item }}"
-    path: "{{ jre_install_dir }}/bin/{{ item }}"
-  with_items: jre_install_bins
+    path: "{{ jre_oracle_install_dir }}/bin/{{ item }}"
+  with_items: jre_oracle_install_bins
+  when: ansible_system in ['Linux'] and jre_prefer_oracle
