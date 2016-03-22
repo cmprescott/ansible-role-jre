@@ -2,20 +2,31 @@ Ansible Role: JRE
 =========
 [![Build Status](https://travis-ci.org/cmprescott/ansible-role-jre.svg?branch=master)](https://travis-ci.org/cmprescott/ansible-role-jre)
 
-Downloads & installs the Oracle JRE. Defaults to Oracle Server JRE.
+Installs the Java Runtime Engine (JRE). Defaults to Oracle Server JRE on Linux. Optionally install OpenJDK JRE using apt, yum, or pkgng.
 
 Requirements
 ------------
 
 ```shell
-# Ansible's uri module requires Python httplib2
-pip install httplib2
-
 # Ansible version > 1.6
 ansible --version
 
+# ----- For Oracle Server JRE -----
+# Ansible's uri module requires Python httplib2
+pip install httplib2
+
 # Oracle server JRE requires 64 bit remote CPU 
 lscpu | grep Architecture
+
+# ----- For OpenJDK JRE -----
+case $OSTYPE in
+  # Linux needs apt|yum
+  "linux"*)
+      apt --version||yum --version;;
+  # FreeBSD needs pkgng (Versions 9+)
+  "freebsd"*)
+      pkg -version;;
+esac
 ```
 
 Role Variables
@@ -25,7 +36,10 @@ Role Variables
 # Prefer Oracle Server JRE when possible?
 jre_prefer_oracle: true
 
-# Download settings
+# OpenJDK version settings
+jre_open_jdk_version: "8"
+
+# Oracle version, download, installation settings
 jre_oracle_version: 8u73
 jre_oracle_download_url: "http://download.oracle.com/otn-pub/java/jdk/{{ jre_version }}-b14/server-jre-{{ jre_version }}-linux-x64.tar.gz"
 jre_oracle_download_referrer: "http://www.oracle.com/technetwork/java/javase/downloads/server-jre8-downloads-2133154.html" 
