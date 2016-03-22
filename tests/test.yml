@@ -1,3 +1,9 @@
+---
+
 - hosts: all
   roles:
     - role: ../..
+    - role: ../..
+      jre_prefer_oracle: false
+
+...
