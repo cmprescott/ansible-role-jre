@@ -2,7 +2,7 @@ Ansible Role: JRE
 =========
 [![Build Status](https://travis-ci.org/cmprescott/ansible-role-jre.svg?branch=master)](https://travis-ci.org/cmprescott/ansible-role-jre)
 
-Installs the Java Runtime Engine (JRE). Defaults to Oracle Server JRE on Linux. Optionally install OpenJDK JRE using apt, yum, or pkgng.
+Installs the Java Runtime Engine (JRE). Defaults to Oracle Server JRE on Linux. EXPERIMENTAL: Install OpenJDK JRE using apt, yum, or pkgng.
 
 Requirements
 ------------
