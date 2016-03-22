@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Prescott Chris
-  description: Downloads & installs the Oracle JRE. Defaults to Oracle Server JRE.
+  description: Installs the Java Runtime Engine (JRE). Defaults to Oracle Server JRE on Linux.
   license: BSD
   min_ansible_version: 1.6
   platforms:
@@ -9,7 +9,14 @@ galaxy_info:
     versions:
     - all
     - any
+  - name: FreeBSD
+    versions:
+    - 9.0
+    - 9.1
+    - 9.2
+    - 9.3
   categories:
   - system
 
 dependencies: []
+...

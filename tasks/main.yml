@@ -3,8 +3,8 @@
 
 # ----- Gather facts & sanity checks -----
 - name: "all | ensure remote os supported"
-  fail: "Unsupported. This role is depends on Linux."
-  when: ansible_system not in ['Linux']
+  fail: "Unsupported. This role is depends on Linux or pkgng."
+  when: ansible_system not in ['Linux'] or ansible_pkg_mgr not in ['apt', 'yum', 'pkgng']
 
 
 # ----- Install Oracle JRE -----
@@ -47,3 +47,25 @@
     path: "{{ jre_oracle_install_dir }}/bin/{{ item }}"
   with_items: jre_oracle_install_bins
   when: ansible_system in ['Linux'] and jre_prefer_oracle
+
+
+# ----- Install OpenJDK JRE -----
+- name: "OpenJDK | apt | ensure OpenJDK JRE present"
+  sudo: Yes
+  apt: name=openjdk-{{ jre_open_jdk_version }}-jre-headless state=present update_cache=no
+  when: not jre_prefer_oracle and ansible_pkg_mgr == 'apt'
+
+
+- name: "OpenJDK | yum | ensure OpenJDK JRE present"
+  sudo: Yes
+  yum: name=java-1.{{ jre_open_jdk_version }}.0-openjdk-headless state=present
+  when: not jre_prefer_oracle and ansible_pkg_mgr == 'yum'
+
+
+- name: "OpenJDK | pkg | ensure OpenJDK JRE present"
+  sudo: Yes
+  pkgng: name=openjdk{{ jre_open_jdk_version }}-jre state=present
+  when: ansible_pkg_mgr == 'pkgng'
+
+# TODO: alternatives for OpenJDK?
+...

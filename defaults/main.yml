@@ -4,8 +4,8 @@
 # Prefer Oracle Server JRE when possible?
 jre_prefer_oracle: true
 
-# Version selection
-jre_version: 8u45
+# OpenJDK version settings
+jre_open_jdk_version: "8"
 
 # Oracle version, download, installation settings
 jre_oracle_version: 8u73
