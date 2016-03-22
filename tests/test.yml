@@ -3,5 +3,9 @@
 - hosts: all
   roles:
     - role: ../..
+      jre_prefer_oracle: true
+    - role: ../..
+      jre_prefer_oracle: false
+      jre_open_jdk_version: 7
 
 ...
