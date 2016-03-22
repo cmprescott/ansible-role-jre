@@ -22,25 +22,24 @@ Role Variables
 --------------
 
 ```yaml
-# Version selection
-jre_version: 8u45
+# Prefer Oracle Server JRE when possible?
+jre_prefer_oracle: true
 
 # Download settings
-jre_download_url: http://download.oracle.com/otn-pub/java/jdk/{{ jre_version }}-b14/server-jre-{{ jre_version }}-linux-x64.tar.gz
-jre_download_referrer: "http://www.oracle.com/technetwork/java/javase/downloads/server-jre8-downloads-2133154.html" 
-jre_download_cookie: >
+jre_oracle_version: 8u73
+jre_oracle_download_url: "http://download.oracle.com/otn-pub/java/jdk/{{ jre_version }}-b14/server-jre-{{ jre_version }}-linux-x64.tar.gz"
+jre_oracle_download_referrer: "http://www.oracle.com/technetwork/java/javase/downloads/server-jre8-downloads-2133154.html" 
+jre_oracle_download_cookie: >
   atgPlatoStop=1; 
   oraclelicense=accept-securebackup-cookie; 
   s_cc=true; 
   ARU_LANG=US; 
   s_nr=1430222185739; 
-  gpw_e24={{ jre_referrer }}
+  gpw_e24={{ jre_download_referrer }}
   s_sq="%"5B"%"5BB"%"5D"%"5D"
-jre_download_dest: /tmp/jre.tar.gz
-
-# Install settings
-jre_install_dir: /usr/lib/jvm/jre_1.{{ jre_version }}
-jre_install_bins: [ 'java', 'javac' ]
+jre_oracle_download_dest: /tmp/jre.tar.gz
+jre_oracle_install_dir: /usr/lib/jvm/jre_1.{{ jre_version }}
+jre_oracle_install_bins: [ 'java', 'javac' ]
 ```
 
 Dependencies
