@@ -1,71 +1,19 @@
----
 # tasks file for ansible-role-jre
 
-# ----- Gather facts & sanity checks -----
+
+# Gather facts & sanity checks
+---
 - name: "all | ensure remote os supported"
-  fail: "Unsupported. This role is depends on Linux or pkgng."
+  fail: msg="Unsupported. This role is depends on Linux or pkgng."
   when: ansible_system not in ['Linux'] or ansible_pkg_mgr not in ['apt', 'yum', 'pkgng']
 
 
-# ----- Install Oracle JRE -----
-- name: "Oracle JRE | check for current jre installation"
-  stat: "path={{ jre_oracle_install_dir }}/bin"
-  register: jre_oracle_bin
+- name: "Oracle | install/configure Oracle JRE"
+  include: main_oracle.yml
   when: ansible_system in ['Linux'] and jre_prefer_oracle
 
 
-- name: "Oracle JRE | ensure jre install directory exists"
-  sudo: Yes
-  file:
-    path: "{{ jre_oracle_install_dir }}"
-    state: directory
-  when: ansible_system in ['Linux'] and jre_prefer_oracle
-
-
-- name: "Oracle JRE | download jre binary tarball"
-  uri:
-    url: "{{ jre_oracle_download_url }}"
-    HEADER_Referer: "{{ jre_oracle_download_referrer }}"
-    HEADER_Cookie: "{{ jre_oracle_download_cookie }}"
-    dest: "{{ jre_oracle_download_dest }}"
-  when: ansible_system in ['Linux'] and jre_prefer_oracle and not jre_oracle_bin.stat.exists
-
-
-- name: "Oracle JRE | unarchive jre binary to its install directory"
-  sudo: Yes
-  command: tar xvf {{ jre_oracle_download_dest }} -C {{ jre_oracle_install_dir }} --strip-components=1
-  args:
-    creates: "{{ jre_oracle_install_dir }}/bin"
-  when: ansible_system in ['Linux'] and jre_prefer_oracle and not jre_oracle_bin.stat.exists
-
-
-- name: "Oracle JRE | ensure alternatives with jre bins"
-  sudo: Yes
-  alternatives:
-    link: "/usr/bin/{{ item }}"
-    name: "{{ item }}"
-    path: "{{ jre_oracle_install_dir }}/bin/{{ item }}"
-  with_items: jre_oracle_install_bins
-  when: ansible_system in ['Linux'] and jre_prefer_oracle
-
-
-# ----- Install OpenJDK JRE -----
-- name: "OpenJDK | apt | ensure OpenJDK JRE present"
-  sudo: Yes
-  apt: name=openjdk-{{ jre_open_jdk_version }}-jre-headless state=present update_cache=no
-  when: not jre_prefer_oracle and ansible_pkg_mgr == 'apt'
-
-
-- name: "OpenJDK | yum | ensure OpenJDK JRE present"
-  sudo: Yes
-  yum: name=java-1.{{ jre_open_jdk_version }}.0-openjdk-headless state=present
-  when: not jre_prefer_oracle and ansible_pkg_mgr == 'yum'
-
-
-- name: "OpenJDK | pkg | ensure OpenJDK JRE present"
-  sudo: Yes
-  pkgng: name=openjdk{{ jre_open_jdk_version }}-jre state=present
-  when: ansible_pkg_mgr == 'pkgng'
-
-# TODO: alternatives for OpenJDK?
+- name: "OpenJDK | install/configure OpenJDK JRE"
+  include: main_openjdk.yml
+  when: ansible_system not in ['Linux'] or not jre_prefer_oracle
 ...
