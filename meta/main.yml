@@ -12,9 +12,6 @@ galaxy_info:
   - name: FreeBSD
     versions:
     - 9.0
-    - 9.1
-    - 9.2
-    - 9.3
   categories:
   - system
 
