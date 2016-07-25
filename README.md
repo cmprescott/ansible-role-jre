@@ -8,7 +8,7 @@ Requirements
 ------------
 
 ```shell
-# Ansible version > 1.6
+# Ansible version 2.1+
 ansible --version
 
 # ----- For Oracle Server JRE -----
