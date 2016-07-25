@@ -40,7 +40,7 @@ jre_prefer_oracle: yes
 jre_open_jdk_version: "8"
 
 # Oracle version, download, installation settings
-jre_oracle_version: 8u73
+jre_oracle_version: 8u101
 jre_oracle_download_url: "http://download.oracle.com/otn-pub/java/jdk/{{ jre_oracle_version }}-b02/server-jre-{{ jre_oracle_version }}-linux-x64.tar.gz"
 jre_oracle_download_referrer: "http://www.oracle.com/technetwork/java/javase/downloads/server-jre8-downloads-2133154.html"
 jre_oracle_download_cookie: >
@@ -51,8 +51,8 @@ jre_oracle_download_cookie: >
   s_nr=1458606516696;
   gpw_e24={{ jre_oracle_download_referrer }}
   s_sq="%"5B"%"5BB"%"5D"%"5D"
-jre_oracle_download_dest: /tmp/jre.tar.gz
-jre_oracle_install_dir: /usr/lib/jvm/jre_1.{{ jre_oracle_version }}
+jre_oracle_download_dest: "/tmp/jre.tar.gz"
+jre_oracle_install_dir: "/usr/lib/jvm/jre_1.{{ jre_oracle_version }}"
 jre_oracle_install_bins: [ 'java', 'javac' ]
 ```
 

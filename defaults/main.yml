@@ -18,7 +18,7 @@ jre_oracle_download_cookie: >
   s_nr=1458606516696;
   gpw_e24={{ jre_oracle_download_referrer }}
   s_sq="%"5B"%"5BB"%"5D"%"5D"
-jre_oracle_download_dest: /tmp/jre.tar.gz
-jre_oracle_install_dir: /usr/lib/jvm/jre_1.{{ jre_oracle_version }}
+jre_oracle_download_dest: "/tmp/jre.tar.gz"
+jre_oracle_install_dir: "/usr/lib/jvm/jre_1.{{ jre_oracle_version }}"
 jre_oracle_install_bins: [ 'java', 'javac' ]
 ...

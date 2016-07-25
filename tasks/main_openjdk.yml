@@ -1,17 +1,17 @@
 # Install OpenJDK JRE
 ---
 - name: "OpenJDK | apt | ensure OpenJDK JRE present"
-  sudo: Yes
+  become: Yes
   apt: name=openjdk-{{ jre_open_jdk_version }}-jre-headless state=present update_cache=no
   when: ansible_pkg_mgr == 'apt'
 
 - name: "OpenJDK | yum | ensure OpenJDK JRE present"
-  sudo: Yes
+  become: Yes
   yum: name=java-1.{{ jre_open_jdk_version }}.0-openjdk-headless state=present
   when: ansible_pkg_mgr == 'yum'
 
 - name: "OpenJDK | pkg | ensure OpenJDK JRE present"
-  sudo: Yes
+  become: Yes
   pkgng: name=openjdk{{ jre_open_jdk_version }}-jre state=present
   when: ansible_pkg_mgr == 'pkgng'
 
