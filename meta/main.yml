@@ -3,7 +3,7 @@ galaxy_info:
   author: Prescott Chris
   description: Installs the Java Runtime Engine (JRE). Defaults to Oracle Server JRE on Linux.
   license: BSD
-  min_ansible_version: 1.6
+  min_ansible_version: 2.1
   platforms:
   - name: GenericLinux
     versions:

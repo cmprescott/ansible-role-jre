@@ -1,17 +1,12 @@
-# tasks file for ansible-role-jre
-
-
-# Gather facts & sanity checks
+# ansible-role-jre gather facts and choose install
 ---
 - name: "all | ensure remote os supported"
   fail: msg="Unsupported. This role is depends on Linux or pkgng."
   when: ansible_system not in ['Linux'] or ansible_pkg_mgr not in ['apt', 'yum', 'pkgng']
 
-
 - name: "Oracle | install/configure Oracle JRE"
   include: main_oracle.yml
   when: ansible_system in ['Linux'] and jre_prefer_oracle
-
 
 - name: "OpenJDK | install/configure OpenJDK JRE"
   include: main_openjdk.yml
