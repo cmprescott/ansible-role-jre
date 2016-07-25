@@ -34,7 +34,7 @@ Role Variables
 
 ```yaml
 # Prefer Oracle Server JRE when possible?
-jre_prefer_oracle: true
+jre_prefer_oracle: yes
 
 # OpenJDK version settings
 jre_open_jdk_version: "8"
