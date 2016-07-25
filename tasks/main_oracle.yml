@@ -16,13 +16,19 @@
     HEADER_Referer: "{{ jre_oracle_download_referrer }}"
     HEADER_Cookie: "{{ jre_oracle_download_cookie }}"
     dest: "{{ jre_oracle_download_dest }}"
+    creates: "{{ jre_oracle_download_dest }}"
   when: not jre_oracle_bin.stat.exists
 
 - name: "Oracle | unarchive jre binary to its install directory"
   become: Yes
-  command: tar xvf {{ jre_oracle_download_dest }} -C {{ jre_oracle_install_dir }} --strip-components=1
-  args:
-    creates: "{{ jre_oracle_install_dir }}/bin"
+  unarchive: > 
+    src="{{ jre_oracle_download_dest }}" 
+    dest="{{ jre_oracle_install_dir }}" 
+    creates="{{ jre_oracle_install_dir }}/bin"
+    extra_opts="--strip-components=1"
+    copy=no
+  # Work-around waiting for PR merge https://github.com/ansible/ansible-modules-core/issues/2480
+  ignore_errors: yes
   when: not jre_oracle_bin.stat.exists
 
 - name: "Oracle | ensure alternatives with jre bins"
