@@ -1,6 +1,5 @@
+# ansible-role-jre  defaults 
 ---
-# defaults file for ansible-role-jre
-
 # Prefer Oracle Server JRE when possible?
 jre_prefer_oracle: true
 
@@ -22,5 +21,4 @@ jre_oracle_download_cookie: >
 jre_oracle_download_dest: /tmp/jre.tar.gz
 jre_oracle_install_dir: /usr/lib/jvm/jre_1.{{ jre_oracle_version }}
 jre_oracle_install_bins: [ 'java', 'javac' ]
-
 ...

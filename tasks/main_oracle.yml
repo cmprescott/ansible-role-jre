@@ -4,13 +4,11 @@
   stat: "path={{ jre_oracle_install_dir }}/bin"
   register: jre_oracle_bin
 
-
 - name: "Oracle | ensure jre install directory exists"
   sudo: Yes
   file:
     path: "{{ jre_oracle_install_dir }}"
     state: directory
-
 
 - name: "Oracle | download jre binary tarball"
   uri:
@@ -20,14 +18,12 @@
     dest: "{{ jre_oracle_download_dest }}"
   when: not jre_oracle_bin.stat.exists
 
-
 - name: "Oracle | unarchive jre binary to its install directory"
   sudo: Yes
   command: tar xvf {{ jre_oracle_download_dest }} -C {{ jre_oracle_install_dir }} --strip-components=1
   args:
     creates: "{{ jre_oracle_install_dir }}/bin"
   when: not jre_oracle_bin.stat.exists
-
 
 - name: "Oracle | ensure alternatives with jre bins"
   sudo: Yes
