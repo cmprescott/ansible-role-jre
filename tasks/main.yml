@@ -2,7 +2,7 @@
 ---
 - name: "all | ensure remote os supported"
   fail: msg="Unsupported. This role is depends on Linux or pkgng."
-  when: ansible_system not in ['Linux'] or ansible_pkg_mgr not in ['apt', 'yum', 'pkgng']
+  when: ansible_system not in ['Linux'] and ansible_pkg_mgr not in ['apt', 'yum', 'pkgng']
 
 - name: "Oracle | install/configure Oracle JRE"
   include: main_oracle.yml
